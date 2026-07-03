@@ -3,7 +3,7 @@ body{
    display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* ye missing hai */
+  min-height: 100vh;
 }
 
 .keyboard {
@@ -55,13 +55,6 @@ body{
     font-size: 24px;
     transition: transform 0.1s ease-in-out;
   }
-
-  @media (max-width: 768px) {
-  .key {
-    width: 40px;
-    height: 40px;
-  }
-}
 
   &:active, &.pressed {
     transform: translateY(5px);
