@@ -1,9 +1,15 @@
-body{
-    background-color: black;
-   display: flex;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 .keyboard {
@@ -11,7 +17,6 @@ body{
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  
   gap: 10px;
   padding: 20px;
   margin: 0 auto;
@@ -19,16 +24,17 @@ body{
   background-color: #d3d3d3;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   width: 95%;
+  max-width: 1400px;
   user-select: none;
 }
 
- .row {
+.row {
   display: flex;
   gap: 6px;
 }
- 
-.key{
-  /* position: relative; */
+
+.key {
+  position: relative;
   width: 100px;
   height: 65px;
   cursor: pointer;
@@ -46,11 +52,26 @@ body{
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 
+  &::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    bottom: 8px;
+    right: 8px;
+    border-radius: 8px;
+    box-shadow:
+      -2px -2px 3px rgba(255, 255, 255, 0.1),
+      2px 2px 4px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    transition: all 0.1s ease-in-out;
+  }
+
   .letter {
     position: relative;
+    z-index: 1;
     left: 12px;
     top: 12px;
-   
     color: #e9e9e9;
     font-size: 24px;
     transition: transform 0.1s ease-in-out;
@@ -78,33 +99,63 @@ body{
       transform: translateY(1px);
     }
   }
-
 }
 
-.print-sc{
+/* Key size variations */
+.print-sc {
   width: 120px;
 }
 
-.delete-key{
+.delete-key {
   width: 180px;
 }
 
-.spacekey{
+.spacekey {
   width: 50%;
 }
 
-.tab-key{
+.tab-key {
   width: 10%;
 }
 
-.return-key , .shift-key{
+.return-key, .shift-key {
   width: 15%;
 }
 
- .caps-lock-key,.backslash-key{
+.caps-lock-key, .backslash-key {
   width: 12%;
 }
 
-.shift-key-2{
+.shift-key-2 {
   width: 20%;
+}
+
+@media (max-width: 678px) {
+  .keyboard {
+    transform: rotate(90deg);
+    gap: 6px;
+    padding: 10px;
+    width: 85%;
+  }
+
+  .key {
+    width: 42.5px;
+    height: 21.25px;
+    border-radius: 6px;
+
+    .letter {
+      left: 5px;
+      top: 2px;
+      font-size: 11px;
+    }
+  }
+
+  .print-sc {
+    width: 55px;
+    padding: 2px;
+  }
+
+  .delete-key {
+    width: 75px;
+  }
 }

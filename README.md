@@ -15,7 +15,7 @@ A fully styled mechanical keyboard built using HTML, CSS, and JavaScript, with l
 ## How to Run
 1. Clone the repo
    git clone https://github.com/priyanshumishra0323/Css-keyboard.git
-2. Open index.html in any browser
+2. Open keyboard.html in any browser
 
 ## Tech Stack
 - HTML5
