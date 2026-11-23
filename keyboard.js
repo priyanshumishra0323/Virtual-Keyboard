@@ -81,3 +81,6 @@ window.addEventListener('blur', () => {
     key.classList.remove('pressed');
   });
 });
+
+// Enable CSS :active pseudo-class state on touch devices (mobile and tablet)
+document.addEventListener('touchstart', () => {}, { passive: true });
