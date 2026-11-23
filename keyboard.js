@@ -81,11 +81,3 @@ window.addEventListener('blur', () => {
     key.classList.remove('pressed');
   });
 });
-
-
-// Clear all active pressed states when the browser window loses focus (e.g. Alt+Tab, Windows key)
-window.addEventListener('blur', () => {
-  document.querySelectorAll('.key.pressed').forEach((key) => {
-    key.classList.remove('pressed');
-  });
-});
