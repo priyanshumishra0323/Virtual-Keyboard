@@ -3,15 +3,344 @@
 }
 
 body {
-  background-color: #121212;
+  background-color: #121214;
+  color: #e4e4e7;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
   margin: 0;
-  padding: 12px;
+  padding: 16px 12px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   overflow-x: hidden;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* =========================================================
+   HEADER & STATS DASHBOARD
+   ========================================================= */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  padding: 4px 2px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: #fafafa;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mode-toggle {
+  display: inline-flex;
+  background-color: #202024;
+  border: 1px solid #2e2e33;
+  border-radius: 20px;
+  padding: 3px;
+  gap: 4px;
+}
+
+.mode-btn {
+  background: transparent;
+  border: none;
+  color: #a1a1aa;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.mode-btn:hover {
+  color: #ffffff;
+}
+
+.mode-btn.active {
+  background-color: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+}
+
+.stats-panel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background: #1c1c20;
+  border: 1px solid #2e2e34;
+  border-radius: 10px;
+  padding: 6px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 68px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #71717a;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f4f4f5;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-wpm {
+  border-color: #0284c7;
+  background: linear-gradient(180deg, #162432, #181e28);
+}
+
+.stat-wpm .stat-label {
+  color: #38bdf8;
+}
+
+.stat-wpm .stat-value {
+  color: #38bdf8;
+  font-size: 22px;
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+.reset-btn {
+  background: #27272a;
+  border: 1px solid #3f3f46;
+  color: #e4e4e7;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.reset-btn:hover {
+  background: #3f3f46;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.reset-btn:active {
+  transform: translateY(1px);
+}
+
+/* =========================================================
+   TYPING DISPLAY SCREEN
+   ========================================================= */
+.screen-container {
+  background-color: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  width: 100%;
+}
+
+.screen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background-color: #202024;
+  border-bottom: 1px solid #27272a;
+  font-size: 12px;
+  color: #a1a1aa;
+}
+
+.screen-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot-red { background-color: #ef4444; }
+.dot-yellow { background-color: #eab308; }
+.dot-green { background-color: #22c55e; }
+
+.screen-mode-info {
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.3px;
+}
+
+.key-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.last-key-badge {
+  display: inline-block;
+  background: #27272a;
+  border: 1px solid #3f3f46;
+  color: #38bdf8;
+  padding: 1px 8px;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 600;
+  min-width: 22px;
+  text-align: center;
+}
+
+.typing-display {
+  min-height: 105px;
+  max-height: 160px;
+  overflow-y: auto;
+  padding: 16px 20px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 19px;
+  line-height: 1.6;
+  position: relative;
+  color: #f4f4f5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.typed-text {
+  display: inline;
+}
+
+.screen-placeholder {
+  color: #52525b;
+  user-select: none;
+  pointer-events: none;
+  font-style: italic;
+  font-size: 16px;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2.5px;
+  height: 1.15em;
+  background-color: #38bdf8;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: cursorBlink 1s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Practice Mode Specific Styles */
+.practice-text-container {
+  font-size: 19px;
+  line-height: 1.7;
+}
+
+.char {
+  position: relative;
+  transition: color 0.05s ease;
+}
+
+.char.pending {
+  color: #71717a;
+}
+
+.char.correct {
+  color: #4ade80;
+}
+
+.char.incorrect {
+  color: #f87171;
+  background-color: rgba(248, 113, 113, 0.2);
+  border-radius: 2px;
+  text-decoration: underline;
+}
+
+.char.current {
+  color: #ffffff;
+  background-color: rgba(56, 189, 248, 0.25);
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px #38bdf8;
+}
+
+.practice-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid #27272a;
+}
+
+.small-btn {
+  background: #27272a;
+  border: 1px solid #3f3f46;
+  color: #e4e4e7;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.small-btn:hover {
+  background: #3f3f46;
+  color: #ffffff;
+}
+
+.practice-complete-msg {
+  color: #4ade80;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* =========================================================
+   KEYBOARD WRAPPER & KEYBOARD STYLES
+   ========================================================= */
+.mobile-hint {
+  display: none;
+  color: #a0a0a0;
+  font-size: 13px;
+  text-align: center;
+  letter-spacing: 0.3px;
 }
 
 .keyboard-wrapper {
@@ -23,16 +352,7 @@ body {
   justify-content: center;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 8px 0;
-}
-
-.mobile-hint {
-  display: none;
-  color: #a0a0a0;
-  font-size: 13px;
-  margin-bottom: 10px;
-  text-align: center;
-  letter-spacing: 0.3px;
+  padding: 4px 0;
 }
 
 .keyboard {
@@ -175,7 +495,7 @@ body {
   flex: 0.85;
 }
 
-/* Modifier labels typography (smaller font for multi-letter keys) */
+/* Modifier labels typography */
 .print-sc .letter,
 .delete-key .letter,
 .tab-key .letter,
@@ -215,8 +535,10 @@ body {
 }
 
 /* =========================================================
-   1. LAPTOPS & SMALL DESKTOPS (1024px - 1300px)
+   RESPONSIVE MEDIA QUERIES
    ========================================================= */
+
+/* 1. LAPTOPS & COMPACT DESKTOPS (1024px - 1300px) */
 @media (max-width: 1300px) {
   .keyboard {
     padding: 14px;
@@ -254,12 +576,32 @@ body {
   .key[data-code^="Arrow"] .letter {
     font-size: 14px;
   }
+
+  .typing-display {
+    font-size: 17px;
+    padding: 14px 18px;
+  }
 }
 
-/* =========================================================
-   2. TABLETS & LARGE MOBILE LANDSCAPE (768px - 1023px)
-   ========================================================= */
+/* 2. TABLETS & LARGE MOBILE LANDSCAPE (768px - 1023px) */
 @media (max-width: 1023px) {
+  .app-header {
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 5px 10px;
+    min-width: 58px;
+  }
+
+  .stat-value {
+    font-size: 16px;
+  }
+
+  .stat-wpm .stat-value {
+    font-size: 19px;
+  }
+
   .keyboard {
     padding: 10px;
     gap: 6px;
@@ -309,25 +651,71 @@ body {
   .key[data-code^="Arrow"] .letter {
     font-size: 12px;
   }
+
+  .typing-display {
+    font-size: 16px;
+    min-height: 90px;
+    padding: 12px 16px;
+  }
 }
 
-/* =========================================================
-   3. MOBILE DEVICES (< 768px)
-   ========================================================= */
+/* 3. MOBILE SCREENS (< 768px) */
 @media (max-width: 767px) {
   body {
-    padding: 6px;
-    align-items: center;
+    padding: 10px 6px;
   }
 
-  .keyboard-wrapper {
-    justify-content: flex-start;
-    padding: 6px 2px;
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .header-left {
+    justify-content: space-between;
+  }
+
+  .app-title {
+    font-size: 17px;
+  }
+
+  .stats-panel {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .stat-card {
+    flex: 1;
+    min-width: 0;
+    padding: 4px 6px;
+  }
+
+  .stat-label {
+    font-size: 9px;
+  }
+
+  .stat-value {
+    font-size: 14px;
+  }
+
+  .stat-wpm .stat-value {
+    font-size: 17px;
+  }
+
+  .reset-btn {
+    padding: 6px 10px;
+    font-size: 12px;
   }
 
   .mobile-hint {
     display: block;
     width: 100%;
+    margin-top: 2px;
+  }
+
+  .keyboard-wrapper {
+    justify-content: flex-start;
+    padding: 4px 0;
   }
 
   .keyboard {
@@ -379,5 +767,11 @@ body {
 
   .key[data-code^="Arrow"] .letter {
     font-size: 11px;
+  }
+
+  .typing-display {
+    font-size: 14px;
+    padding: 10px 12px;
+    min-height: 80px;
   }
 }
