@@ -53,12 +53,12 @@ let freeTypedText = '';
 let practiceText = '';
 let practiceCharIndex = 0;
 let practiceErrors = 0;
+let charHistory = []; // Tracks 'correct' | 'incorrect' for accurate backspace math
 
 let timerRunning = false;
 let startTime = null;
 let timerInterval = null;
 let totalKeystrokes = 0;
-let correctKeystrokes = 0;
 let capsLockState = false;
 
 // DOM Elements
@@ -80,6 +80,7 @@ const statChars = document.getElementById('stat-chars');
 const btnReset = document.getElementById('btn-reset');
 const lastKeyEl = document.getElementById('last-key');
 const screenModeInfo = document.getElementById('screen-mode-info');
+const capsLockKeyEl = document.querySelector('.key[data-code="CapsLock"]');
 
 // =========================================================
 // TIMER & WPM CALCULATION
@@ -110,6 +111,7 @@ function updateStatsDisplay() {
   const m = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
   const s = String(elapsedSeconds % 60).padStart(2, '0');
   statTime.textContent = `${m}:${s}`;
+  statTime.setAttribute('aria-label', `Elapsed time: ${m} minutes ${s} seconds`);
 
   let wpm = 0;
   let accuracy = 100;
@@ -119,7 +121,9 @@ function updateStatsDisplay() {
     const standardWords = freeTypedText.length / 5;
     wpm = Math.round(standardWords / minutes);
     statChars.textContent = freeTypedText.length;
+    statChars.setAttribute('aria-label', `Characters typed: ${freeTypedText.length}`);
     statAccuracy.textContent = '100%';
+    statAccuracy.setAttribute('aria-label', 'Accuracy: 100 percent');
   } else {
     // Practice Mode WPM: (Correct Characters / 5) / minutes
     const netCorrect = Math.max(0, practiceCharIndex - practiceErrors);
@@ -130,25 +134,33 @@ function updateStatsDisplay() {
       accuracy = Math.max(0, Math.round(((totalKeystrokes - practiceErrors) / totalKeystrokes) * 100));
     }
     statChars.textContent = practiceCharIndex;
+    statChars.setAttribute('aria-label', `Characters typed: ${practiceCharIndex}`);
     statAccuracy.textContent = `${accuracy}%`;
+    statAccuracy.setAttribute('aria-label', `Accuracy: ${accuracy} percent`);
   }
 
-  statWpm.textContent = isNaN(wpm) ? 0 : wpm;
+  const finalWpm = isNaN(wpm) ? 0 : wpm;
+  statWpm.textContent = finalWpm;
+  statWpm.setAttribute('aria-label', `Words per minute: ${finalWpm}`);
 }
 
 function resetAll() {
   stopTimer();
   startTime = null;
   totalKeystrokes = 0;
-  correctKeystrokes = 0;
   freeTypedText = '';
   practiceCharIndex = 0;
   practiceErrors = 0;
+  charHistory = [];
 
   statWpm.textContent = '0';
+  statWpm.setAttribute('aria-label', 'Words per minute: 0');
   statAccuracy.textContent = '100%';
+  statAccuracy.setAttribute('aria-label', 'Accuracy: 100 percent');
   statTime.textContent = '00:00';
+  statTime.setAttribute('aria-label', 'Elapsed time: 00:00');
   statChars.textContent = '0';
+  statChars.setAttribute('aria-label', 'Characters typed: 0');
   lastKeyEl.textContent = '-';
 
   if (practiceCompleteMsg) {
@@ -163,15 +175,16 @@ function resetAll() {
 }
 
 // =========================================================
-// FREE TYPING MODE
+// FREE TYPING MODE (Inline Cursor Fix)
 // =========================================================
 function renderFreeView() {
-  typedTextEl.textContent = freeTypedText;
   if (freeTypedText.length === 0) {
+    typedTextEl.textContent = '';
     screenPlaceholder.style.display = 'inline';
     freeCursorEl.style.display = 'inline-block';
   } else {
     screenPlaceholder.style.display = 'none';
+    typedTextEl.textContent = freeTypedText;
     freeCursorEl.style.display = 'inline-block';
   }
   // Auto scroll to bottom
@@ -201,21 +214,26 @@ function handleFreeInput(char, code) {
 }
 
 // =========================================================
-// PRACTICE MODE
+// PRACTICE MODE (Accurate Per-Character Backspace Tracking)
 // =========================================================
 function loadNewPracticeSentence() {
   const randomIndex = Math.floor(Math.random() * practiceSentences.length);
   practiceText = practiceSentences[randomIndex];
   practiceCharIndex = 0;
   practiceErrors = 0;
+  charHistory = [];
   totalKeystrokes = 0;
   stopTimer();
   startTime = null;
 
   statWpm.textContent = '0';
+  statWpm.setAttribute('aria-label', 'Words per minute: 0');
   statAccuracy.textContent = '100%';
+  statAccuracy.setAttribute('aria-label', 'Accuracy: 100 percent');
   statTime.textContent = '00:00';
+  statTime.setAttribute('aria-label', 'Elapsed time: 00:00');
   statChars.textContent = '0';
+  statChars.setAttribute('aria-label', 'Characters typed: 0');
 
   if (practiceCompleteMsg) {
     practiceCompleteMsg.style.display = 'none';
@@ -233,7 +251,7 @@ function renderPracticeView() {
     span.textContent = practiceText[i];
 
     if (i < practiceCharIndex) {
-      span.classList.add('correct');
+      span.classList.add(charHistory[i] === 'incorrect' ? 'incorrect' : 'correct');
     } else if (i === practiceCharIndex) {
       span.classList.add('current');
     } else {
@@ -250,9 +268,16 @@ function handlePracticeInput(char, code) {
   startTimerIfNeeded();
   totalKeystrokes++;
 
+  // Handle Backspace
   if (code === 'Backspace' || char === 'Backspace') {
     if (practiceCharIndex > 0) {
       practiceCharIndex--;
+      // If the backspaced character was an error, decrement practiceErrors
+      if (charHistory[practiceCharIndex] === 'incorrect') {
+        practiceErrors = Math.max(0, practiceErrors - 1);
+      }
+      charHistory.pop();
+
       const span = practiceTextContainer.children[practiceCharIndex];
       if (span) {
         span.className = 'char current';
@@ -276,15 +301,22 @@ function handlePracticeInput(char, code) {
 
     if (typedChar === targetChar) {
       currentSpan.className = 'char correct';
+      charHistory.push('correct');
     } else {
       currentSpan.className = 'char incorrect';
+      charHistory.push('incorrect');
       practiceErrors++;
     }
 
     practiceCharIndex++;
 
     if (practiceCharIndex < practiceText.length) {
-      practiceTextContainer.children[practiceCharIndex].className = 'char current';
+      const nextSpan = practiceTextContainer.children[practiceCharIndex];
+      if (nextSpan) {
+        nextSpan.className = 'char current';
+        // Auto scroll to keep active character visible
+        nextSpan.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
     } else {
       // Completed!
       stopTimer();
@@ -308,14 +340,18 @@ function switchMode(newMode) {
 
   if (newMode === 'free') {
     btnFreeMode.classList.add('active');
+    btnFreeMode.setAttribute('aria-pressed', 'true');
     btnPracticeMode.classList.remove('active');
+    btnPracticeMode.setAttribute('aria-pressed', 'false');
     freeTypingView.style.display = 'block';
     practiceTypingView.style.display = 'none';
     screenModeInfo.textContent = 'Free Typing Mode';
     renderFreeView();
   } else {
     btnPracticeMode.classList.add('active');
+    btnPracticeMode.setAttribute('aria-pressed', 'true');
     btnFreeMode.classList.remove('active');
+    btnFreeMode.setAttribute('aria-pressed', 'false');
     freeTypingView.style.display = 'none';
     practiceTypingView.style.display = 'block';
     screenModeInfo.textContent = 'Practice Mode';
@@ -362,6 +398,13 @@ function updateLastKeyBadge(keyLabel) {
   }
 }
 
+function syncCapsLockIndicator(state) {
+  capsLockState = state;
+  if (capsLockKeyEl) {
+    capsLockKeyEl.classList.toggle('active-caps', capsLockState);
+  }
+}
+
 // =========================================================
 // PHYSICAL KEYBOARD EVENTS
 // =========================================================
@@ -377,9 +420,9 @@ document.addEventListener('keydown', (e) => {
     keyEl.classList.add('pressed');
   }
 
-  // Caps lock detection
+  // Sync CapsLock indicator
   if (e.getModifierState) {
-    capsLockState = e.getModifierState('CapsLock');
+    syncCapsLockIndicator(e.getModifierState('CapsLock'));
   }
 
   // Ignore solo modifier keys for typing (Shift, Ctrl, Alt, Meta alone)
@@ -402,6 +445,10 @@ document.addEventListener('keyup', (e) => {
   const keyEl = findKeyElement(e);
   if (keyEl) {
     keyEl.classList.remove('pressed');
+  }
+
+  if (e.getModifierState) {
+    syncCapsLockIndicator(e.getModifierState('CapsLock'));
   }
 });
 
@@ -454,8 +501,7 @@ function getVirtualKeyChar(keyEl) {
   }
 
   if (code === 'CapsLock') {
-    capsLockState = !capsLockState;
-    keyEl.classList.toggle('active-caps', capsLockState);
+    syncCapsLockIndicator(!capsLockState);
     return { char: 'CapsLock', code: 'CapsLock' };
   }
 
@@ -465,7 +511,7 @@ function getVirtualKeyChar(keyEl) {
 // Attach click / touch handlers to all virtual keys
 document.querySelectorAll('.key').forEach((keyEl) => {
   keyEl.addEventListener('pointerdown', (e) => {
-    // Visual press
+    e.preventDefault(); // Prevent accidental drag, text selection, or focus loss
     keyEl.classList.add('pressed');
 
     const { char, code } = getVirtualKeyChar(keyEl);

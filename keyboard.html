@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive mechanical keyboard simulator and typing practice web application with real-time WPM, accuracy tracking, and dual typing modes.">
   <title>Mechanical Typing Practice</title>
   <link rel="stylesheet" href="keyboard.css">
   <script src="keyboard.js" defer></script>
@@ -12,324 +13,322 @@
 <body>
   <div class="app-container">
     <!-- Top Header & Live Stats Dashboard -->
-    <header class="app-header">
+    <header class="app-header" role="banner">
       <div class="header-left">
         <h1 class="app-title">⌨️ Mechanical Typing Practice</h1>
-        <div class="mode-toggle">
-          <button id="btn-free-mode" class="mode-btn active" type="button">✍️ Free Typing</button>
-          <button id="btn-practice-mode" class="mode-btn" type="button">🎯 Practice Mode</button>
+        <div class="mode-toggle" role="group" aria-label="Typing Mode Selection">
+          <button id="btn-free-mode" class="mode-btn active" type="button" aria-pressed="true">✍️ Free Typing</button>
+          <button id="btn-practice-mode" class="mode-btn" type="button" aria-pressed="false">🎯 Practice Mode</button>
         </div>
       </div>
 
-      <div class="stats-panel">
+      <div class="stats-panel" role="region" aria-label="Typing Statistics" aria-live="polite">
         <div class="stat-card stat-wpm">
           <span class="stat-label">WPM</span>
-          <span class="stat-value" id="stat-wpm">0</span>
+          <span class="stat-value" id="stat-wpm" aria-label="Words per minute: 0">0</span>
         </div>
         <div class="stat-card">
           <span class="stat-label">Accuracy</span>
-          <span class="stat-value" id="stat-accuracy">100%</span>
+          <span class="stat-value" id="stat-accuracy" aria-label="Accuracy: 100 percent">100%</span>
         </div>
         <div class="stat-card">
           <span class="stat-label">Time</span>
-          <span class="stat-value" id="stat-time">00:00</span>
+          <span class="stat-value" id="stat-time" aria-label="Elapsed time: 00:00">00:00</span>
         </div>
         <div class="stat-card">
           <span class="stat-label">Chars</span>
-          <span class="stat-value" id="stat-chars">0</span>
+          <span class="stat-value" id="stat-chars" aria-label="Characters typed: 0">0</span>
         </div>
-        <button id="btn-reset" class="reset-btn" type="button" title="Reset Session">🔄 Reset</button>
+        <button id="btn-reset" class="reset-btn" type="button" aria-label="Reset typing session" title="Reset Session">🔄 Reset</button>
       </div>
     </header>
 
     <!-- Typing Display Screen -->
-    <div class="screen-container">
+    <section class="screen-container" aria-label="Typing Display Screen">
       <div class="screen-header">
-        <div class="screen-dots">
+        <div class="screen-dots" aria-hidden="true">
           <span class="dot dot-red"></span>
           <span class="dot dot-yellow"></span>
           <span class="dot dot-green"></span>
         </div>
         <div class="screen-mode-info" id="screen-mode-info">Free Typing Mode</div>
-        <div class="key-indicator">Last Key: <span id="last-key" class="last-key-badge">-</span></div>
+        <div class="key-indicator">Last Key: <span id="last-key" class="last-key-badge" aria-live="polite">-</span></div>
       </div>
 
       <!-- Free Typing View -->
-      <div id="free-typing-view" class="typing-display">
-        <div id="typed-text" class="typed-text"></div>
-        <span class="cursor" id="free-cursor"></span>
-        <div id="screen-placeholder" class="screen-placeholder">Start typing on your keyboard or tap keys below...</div>
+      <div id="free-typing-view" class="typing-display" aria-label="Free typing display area">
+        <span id="screen-placeholder" class="screen-placeholder" aria-hidden="true">Start typing on your keyboard or tap keys below...</span><span id="typed-text" class="typed-text" aria-live="polite"></span><span class="cursor" id="free-cursor" aria-hidden="true"></span>
       </div>
 
       <!-- Practice Mode View -->
-      <div id="practice-typing-view" class="typing-display practice-view" style="display: none;">
-        <div id="practice-text-container" class="practice-text-container"></div>
+      <div id="practice-typing-view" class="typing-display practice-view" style="display: none;" aria-label="Practice text display area">
+        <div id="practice-text-container" class="practice-text-container" aria-live="polite"></div>
         <div class="practice-controls">
-          <button id="btn-new-text" class="small-btn" type="button">🎲 New Sentence</button>
-          <div id="practice-complete-msg" class="practice-complete-msg" style="display: none;">🎉 Great job! Press New Sentence to continue.</div>
+          <button id="btn-new-text" class="small-btn" type="button" aria-label="Load a new practice sentence">🎲 New Sentence</button>
+          <div id="practice-complete-msg" class="practice-complete-msg" style="display: none;" role="status">🎉 Great job! Press New Sentence to continue.</div>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- Mobile Screen Hint -->
-    <div class="mobile-hint">📱 Rotate to landscape or scroll horizontally for full keyboard view</div>
+    <div class="mobile-hint" aria-hidden="true">📱 Rotate to landscape or scroll horizontally for full keyboard view</div>
 
     <!-- Virtual Mechanical Keyboard -->
-    <div class="keyboard-wrapper">
+    <main class="keyboard-wrapper" role="region" aria-label="Virtual Mechanical Keyboard">
       <div class="keyboard">
         <div class="row">
-          <div class="key" data-code="Escape">
+          <div class="key" data-code="Escape" role="button" tabindex="-1" aria-label="Escape">
             <div class="letter">esc</div>
           </div>
-          <div class="key" data-code="F1">
+          <div class="key" data-code="F1" role="button" tabindex="-1" aria-label="Function 1">
             <div class="letter">F1</div>
           </div>
-          <div class="key" data-code="F2">
+          <div class="key" data-code="F2" role="button" tabindex="-1" aria-label="Function 2">
             <div class="letter">F2</div>
           </div>
-          <div class="key" data-code="F3">
+          <div class="key" data-code="F3" role="button" tabindex="-1" aria-label="Function 3">
             <div class="letter">F3</div>
           </div>
-          <div class="key" data-code="F4">
+          <div class="key" data-code="F4" role="button" tabindex="-1" aria-label="Function 4">
             <div class="letter">F4</div>
           </div>
-          <div class="key" data-code="F5">
+          <div class="key" data-code="F5" role="button" tabindex="-1" aria-label="Function 5">
             <div class="letter">F5</div>
           </div>
-          <div class="key" data-code="F6">
+          <div class="key" data-code="F6" role="button" tabindex="-1" aria-label="Function 6">
             <div class="letter">F6</div>
           </div>
-          <div class="key" data-code="F7">
+          <div class="key" data-code="F7" role="button" tabindex="-1" aria-label="Function 7">
             <div class="letter">F7</div>
           </div>
-          <div class="key" data-code="F8">
+          <div class="key" data-code="F8" role="button" tabindex="-1" aria-label="Function 8">
             <div class="letter">F8</div>
           </div>
-          <div class="key" data-code="F9">
+          <div class="key" data-code="F9" role="button" tabindex="-1" aria-label="Function 9">
             <div class="letter">F9</div>
           </div>
-          <div class="key" data-code="F10">
+          <div class="key" data-code="F10" role="button" tabindex="-1" aria-label="Function 10">
             <div class="letter">F10</div>
           </div>
-          <div class="key" data-code="F11">
+          <div class="key" data-code="F11" role="button" tabindex="-1" aria-label="Function 11">
             <div class="letter">F11</div>
           </div>
-          <div class="key" data-code="F12">
+          <div class="key" data-code="F12" role="button" tabindex="-1" aria-label="Function 12">
             <div class="letter">F12</div>
           </div>
-          <div class="key print-sc" data-code="PrintScreen">
+          <div class="key print-sc" data-code="PrintScreen" role="button" tabindex="-1" aria-label="Print Screen">
             <div class="letter">prt scn</div>
           </div>
         </div>
 
         <div class="row">
-          <div class="key" data-code="Backquote">
+          <div class="key" data-code="Backquote" role="button" tabindex="-1" aria-label="Backquote and Tilde">
             <div class="letter">`</div>
           </div>
-          <div class="key" data-code="Digit1">
+          <div class="key" data-code="Digit1" role="button" tabindex="-1" aria-label="1 and Exclamation">
             <div class="letter">1</div>
           </div>
-          <div class="key" data-code="Digit2">
+          <div class="key" data-code="Digit2" role="button" tabindex="-1" aria-label="2 and At">
             <div class="letter">2</div>
           </div>
-          <div class="key" data-code="Digit3">
+          <div class="key" data-code="Digit3" role="button" tabindex="-1" aria-label="3 and Hash">
             <div class="letter">3</div>
           </div>
-          <div class="key" data-code="Digit4">
+          <div class="key" data-code="Digit4" role="button" tabindex="-1" aria-label="4 and Dollar">
             <div class="letter">4</div>
           </div>
-          <div class="key" data-code="Digit5">
+          <div class="key" data-code="Digit5" role="button" tabindex="-1" aria-label="5 and Percent">
             <div class="letter">5</div>
           </div>
-          <div class="key" data-code="Digit6">
+          <div class="key" data-code="Digit6" role="button" tabindex="-1" aria-label="6 and Caret">
             <div class="letter">6</div>
           </div>
-          <div class="key" data-code="Digit7">
+          <div class="key" data-code="Digit7" role="button" tabindex="-1" aria-label="7 and Ampersand">
             <div class="letter">7</div>
           </div>
-          <div class="key" data-code="Digit8">
+          <div class="key" data-code="Digit8" role="button" tabindex="-1" aria-label="8 and Asterisk">
             <div class="letter">8</div>
           </div>
-          <div class="key" data-code="Digit9">
+          <div class="key" data-code="Digit9" role="button" tabindex="-1" aria-label="9 and Left Parenthesis">
             <div class="letter">9</div>
           </div>
-          <div class="key" data-code="Digit0">
+          <div class="key" data-code="Digit0" role="button" tabindex="-1" aria-label="0 and Right Parenthesis">
             <div class="letter">0</div>
           </div>
-          <div class="key" data-code="Minus">
+          <div class="key" data-code="Minus" role="button" tabindex="-1" aria-label="Minus and Underscore">
             <div class="letter">-</div>
           </div>
-          <div class="key" data-code="Equal">
+          <div class="key" data-code="Equal" role="button" tabindex="-1" aria-label="Equal and Plus">
             <div class="letter">=</div>
           </div>
-          <div class="key delete-key" data-code="Backspace">
+          <div class="key delete-key" data-code="Backspace" role="button" tabindex="-1" aria-label="Backspace or Delete">
             <div class="letter">← delete</div>
           </div>
         </div>
 
         <div class="row">
-          <div class="key tab-key" data-code="Tab">
+          <div class="key tab-key" data-code="Tab" role="button" tabindex="-1" aria-label="Tab">
             <div class="letter">tab ⮂</div>
           </div>
-          <div class="key" data-code="KeyQ">
+          <div class="key" data-code="KeyQ" role="button" tabindex="-1" aria-label="Q">
             <div class="letter">Q</div>
           </div>
-          <div class="key" data-code="KeyW">
+          <div class="key" data-code="KeyW" role="button" tabindex="-1" aria-label="W">
             <div class="letter">W</div>
           </div>
-          <div class="key" data-code="KeyE">
+          <div class="key" data-code="KeyE" role="button" tabindex="-1" aria-label="E">
             <div class="letter">E</div>
           </div>
-          <div class="key" data-code="KeyR">
+          <div class="key" data-code="KeyR" role="button" tabindex="-1" aria-label="R">
             <div class="letter">R</div>
           </div>
-          <div class="key" data-code="KeyT">
+          <div class="key" data-code="KeyT" role="button" tabindex="-1" aria-label="T">
             <div class="letter">T</div>
           </div>
-          <div class="key" data-code="KeyY">
+          <div class="key" data-code="KeyY" role="button" tabindex="-1" aria-label="Y">
             <div class="letter">Y</div>
           </div>
-          <div class="key" data-code="KeyU">
+          <div class="key" data-code="KeyU" role="button" tabindex="-1" aria-label="U">
             <div class="letter">U</div>
           </div>
-          <div class="key" data-code="KeyI">
+          <div class="key" data-code="KeyI" role="button" tabindex="-1" aria-label="I">
             <div class="letter">I</div>
           </div>
-          <div class="key" data-code="KeyO">
+          <div class="key" data-code="KeyO" role="button" tabindex="-1" aria-label="O">
             <div class="letter">O</div>
           </div>
-          <div class="key" data-code="KeyP">
+          <div class="key" data-code="KeyP" role="button" tabindex="-1" aria-label="P">
             <div class="letter">P</div>
           </div>
-          <div class="key" data-code="BracketLeft">
+          <div class="key" data-code="BracketLeft" role="button" tabindex="-1" aria-label="Left Bracket and Brace">
             <div class="letter">[</div>
           </div>
-          <div class="key" data-code="BracketRight">
+          <div class="key" data-code="BracketRight" role="button" tabindex="-1" aria-label="Right Bracket and Brace">
             <div class="letter">]</div>
           </div>
-          <div class="key backslash-key" data-code="Backslash">
+          <div class="key backslash-key" data-code="Backslash" role="button" tabindex="-1" aria-label="Backslash and Pipe">
             <div class="letter">\</div>
           </div>
         </div>
 
         <div class="row">
-          <div class="key caps-lock-key" data-code="CapsLock">
+          <div class="key caps-lock-key" data-code="CapsLock" role="button" tabindex="-1" aria-label="Caps Lock">
             <div class="letter">caps lock</div>
           </div>
-          <div class="key" data-code="KeyA">
+          <div class="key" data-code="KeyA" role="button" tabindex="-1" aria-label="A">
             <div class="letter">A</div>
           </div>
-          <div class="key" data-code="KeyS">
+          <div class="key" data-code="KeyS" role="button" tabindex="-1" aria-label="S">
             <div class="letter">S</div>
           </div>
-          <div class="key" data-code="KeyD">
+          <div class="key" data-code="KeyD" role="button" tabindex="-1" aria-label="D">
             <div class="letter">D</div>
           </div>
-          <div class="key" data-code="KeyF">
+          <div class="key" data-code="KeyF" role="button" tabindex="-1" aria-label="F">
             <div class="letter">F</div>
           </div>
-          <div class="key" data-code="KeyG">
+          <div class="key" data-code="KeyG" role="button" tabindex="-1" aria-label="G">
             <div class="letter">G</div>
           </div>
-          <div class="key" data-code="KeyH">
+          <div class="key" data-code="KeyH" role="button" tabindex="-1" aria-label="H">
             <div class="letter">H</div>
           </div>
-          <div class="key" data-code="KeyJ">
+          <div class="key" data-code="KeyJ" role="button" tabindex="-1" aria-label="J">
             <div class="letter">J</div>
           </div>
-          <div class="key" data-code="KeyK">
+          <div class="key" data-code="KeyK" role="button" tabindex="-1" aria-label="K">
             <div class="letter">K</div>
           </div>
-          <div class="key" data-code="KeyL">
+          <div class="key" data-code="KeyL" role="button" tabindex="-1" aria-label="L">
             <div class="letter">L</div>
           </div>
-          <div class="key" data-code="Semicolon">
+          <div class="key" data-code="Semicolon" role="button" tabindex="-1" aria-label="Semicolon and Colon">
             <div class="letter">;</div>
           </div>
-          <div class="key" data-code="Quote">
+          <div class="key" data-code="Quote" role="button" tabindex="-1" aria-label="Quote and Double Quote">
             <div class="letter">'</div>
           </div>
-          <div class="key return-key" data-code="Enter">
+          <div class="key return-key" data-code="Enter" role="button" tabindex="-1" aria-label="Enter or Return">
             <div class="letter">↵ Enter</div>
           </div>
         </div>
 
         <div class="row">
-          <div class="key shift-key" data-code="ShiftLeft">
+          <div class="key shift-key" data-code="ShiftLeft" role="button" tabindex="-1" aria-label="Left Shift">
             <div class="letter">⬆ Shift</div>
           </div>
-          <div class="key" data-code="KeyZ">
+          <div class="key" data-code="KeyZ" role="button" tabindex="-1" aria-label="Z">
             <div class="letter">Z</div>
           </div>
-          <div class="key" data-code="KeyX">
+          <div class="key" data-code="KeyX" role="button" tabindex="-1" aria-label="X">
             <div class="letter">X</div>
           </div>
-          <div class="key" data-code="KeyC">
+          <div class="key" data-code="KeyC" role="button" tabindex="-1" aria-label="C">
             <div class="letter">C</div>
           </div>
-          <div class="key" data-code="KeyV">
+          <div class="key" data-code="KeyV" role="button" tabindex="-1" aria-label="V">
             <div class="letter">V</div>
           </div>
-          <div class="key" data-code="KeyB">
+          <div class="key" data-code="KeyB" role="button" tabindex="-1" aria-label="B">
             <div class="letter">B</div>
           </div>
-          <div class="key" data-code="KeyN">
+          <div class="key" data-code="KeyN" role="button" tabindex="-1" aria-label="N">
             <div class="letter">N</div>
           </div>
-          <div class="key" data-code="KeyM">
+          <div class="key" data-code="KeyM" role="button" tabindex="-1" aria-label="M">
             <div class="letter">M</div>
           </div>
-          <div class="key" data-code="Comma">
+          <div class="key" data-code="Comma" role="button" tabindex="-1" aria-label="Comma and Less Than">
             <div class="letter">,</div>
           </div>
-          <div class="key" data-code="Period">
+          <div class="key" data-code="Period" role="button" tabindex="-1" aria-label="Period and Greater Than">
             <div class="letter">.</div>
           </div>
-          <div class="key" data-code="Slash">
+          <div class="key" data-code="Slash" role="button" tabindex="-1" aria-label="Slash and Question Mark">
             <div class="letter">/</div>
           </div>
-          <div class="key shift-key-2" data-code="ShiftRight">
+          <div class="key shift-key-2" data-code="ShiftRight" role="button" tabindex="-1" aria-label="Right Shift">
             <div class="letter">⬆ shift</div>
           </div>
         </div>
 
         <div class="row">
-          <div class="key" data-code="ControlLeft">
+          <div class="key" data-code="ControlLeft" role="button" tabindex="-1" aria-label="Control">
             <div class="letter">Ctrl</div>
           </div>
-          <div class="key" data-code="Fn">
+          <div class="key" data-code="Fn" role="button" tabindex="-1" aria-label="Function">
             <div class="letter">fn</div>
           </div>
-          <div class="key" data-code="AltLeft">
+          <div class="key" data-code="AltLeft" role="button" tabindex="-1" aria-label="Left Option or Alt">
             <div class="letter">⌥</div>
           </div>
-          <div class="key" data-code="MetaLeft">
+          <div class="key" data-code="MetaLeft" role="button" tabindex="-1" aria-label="Left Command or Windows Key">
             <div class="letter">⌘</div>
           </div>
-          <div class="key spacekey" data-code="Space">
+          <div class="key spacekey" data-code="Space" role="button" tabindex="-1" aria-label="Spacebar">
             <div class="letter">space</div>
           </div>
-          <div class="key" data-code="MetaRight">
+          <div class="key" data-code="MetaRight" role="button" tabindex="-1" aria-label="Right Command or Windows Key">
             <div class="letter">⌘</div>
           </div>
-          <div class="key" data-code="AltRight">
+          <div class="key" data-code="AltRight" role="button" tabindex="-1" aria-label="Right Option or Alt">
             <div class="letter">⌥</div>
           </div>
-          <div class="key" data-code="ArrowLeft">
+          <div class="key" data-code="ArrowLeft" role="button" tabindex="-1" aria-label="Left Arrow">
             <div class="letter">◀</div>
           </div>
-          <div class="key" data-code="ArrowDown">
+          <div class="key" data-code="ArrowDown" role="button" tabindex="-1" aria-label="Down Arrow">
             <div class="letter">▼</div>
           </div>
-          <div class="key" data-code="ArrowUp">
+          <div class="key" data-code="ArrowUp" role="button" tabindex="-1" aria-label="Up Arrow">
             <div class="letter">▲</div>
           </div>
-          <div class="key" data-code="ArrowRight">
+          <div class="key" data-code="ArrowRight" role="button" tabindex="-1" aria-label="Right Arrow">
             <div class="letter">▶</div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   </div>
 </body>
 </html>

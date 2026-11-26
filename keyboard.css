@@ -25,6 +25,28 @@ body {
 }
 
 /* =========================================================
+   ACCESSIBILITY & FOCUS VISIBLE STYLES
+   ========================================================= */
+button:focus-visible,
+.key:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cursor {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* =========================================================
    HEADER & STATS DASHBOARD
    ========================================================= */
 .app-header {
@@ -73,6 +95,7 @@ body {
   font-weight: 600;
   border-radius: 16px;
   cursor: pointer;
+  touch-action: manipulation;
   transition: all 0.15s ease-in-out;
 }
 
@@ -108,7 +131,7 @@ body {
 .stat-label {
   font-size: 10px;
   text-transform: uppercase;
-  color: #71717a;
+  color: #9ca3af; /* High contrast WCAG AA compliant */
   font-weight: 700;
   letter-spacing: 0.5px;
 }
@@ -144,6 +167,7 @@ body {
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  touch-action: manipulation;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -226,13 +250,13 @@ body {
 }
 
 .typing-display {
-  min-height: 105px;
-  max-height: 160px;
+  min-height: 80px;
+  max-height: 125px;
   overflow-y: auto;
-  padding: 16px 20px;
+  padding: 12px 18px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 19px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.5;
   position: relative;
   color: #f4f4f5;
   white-space: pre-wrap;
@@ -241,10 +265,12 @@ body {
 
 .typed-text {
   display: inline;
+  color: #f4f4f5;
+  white-space: pre-wrap;
 }
 
 .screen-placeholder {
-  color: #52525b;
+  color: #8e8e98; /* High contrast WCAG AA compliant */
   user-select: none;
   pointer-events: none;
   font-style: italic;
@@ -268,8 +294,8 @@ body {
 
 /* Practice Mode Specific Styles */
 .practice-text-container {
-  font-size: 19px;
-  line-height: 1.7;
+  font-size: 18px;
+  line-height: 1.5;
 }
 
 .char {
@@ -278,7 +304,7 @@ body {
 }
 
 .char.pending {
-  color: #71717a;
+  color: #9ca3af; /* High contrast WCAG AA compliant */
 }
 
 .char.correct {
@@ -303,8 +329,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 14px;
-  padding-top: 10px;
+  margin-top: 8px;
+  padding-top: 6px;
   border-top: 1px solid #27272a;
 }
 
@@ -317,6 +343,7 @@ body {
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
+  touch-action: manipulation;
   transition: all 0.15s ease;
 }
 
@@ -352,7 +379,7 @@ body {
   justify-content: center;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 4px 0;
+  padding: 0;
 }
 
 .keyboard {
@@ -381,7 +408,7 @@ body {
   position: relative;
   flex: 1;
   min-width: 0;
-  height: 62px;
+  height: 52px;
   cursor: pointer;
   border-radius: 9px;
   background: linear-gradient(180deg, #282828, #202020);
@@ -395,6 +422,7 @@ body {
     transform 0.08s ease-in-out,
     box-shadow 0.08s ease-in;
   user-select: none;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 
   &::before {
@@ -416,9 +444,9 @@ body {
     position: absolute;
     z-index: 1;
     left: 10px;
-    top: 10px;
+    top: 8px;
     color: #e9e9e9;
-    font-size: 20px;
+    font-size: 19px;
     white-space: nowrap;
     pointer-events: none;
     transition: transform 0.08s ease-in-out;
@@ -446,6 +474,19 @@ body {
       transform: translateY(1px);
     }
   }
+}
+
+/* CapsLock Active Indicator Light */
+.key.caps-lock-key.active-caps {
+  box-shadow:
+    inset -4px 0 4px rgba(0, 0, 0, 0.2),
+    inset 0 -4px 4px rgba(0, 0, 0, 0.3),
+    0 0 0 2px #22c55e,
+    0 0 10px rgba(34, 197, 94, 0.45);
+}
+
+.key.caps-lock-key.active-caps .letter {
+  color: #4ade80;
 }
 
 /* Key size proportional flex weights (Exact 15.0 units per row) */
@@ -550,7 +591,7 @@ body {
   }
 
   .key {
-    height: 54px;
+    height: 48px;
     border-radius: 8px;
 
     .letter {
@@ -579,7 +620,8 @@ body {
 
   .typing-display {
     font-size: 17px;
-    padding: 14px 18px;
+    padding: 12px 18px;
+    max-height: 125px;
   }
 }
 
@@ -654,8 +696,9 @@ body {
 
   .typing-display {
     font-size: 16px;
-    min-height: 90px;
-    padding: 12px 16px;
+    min-height: 75px;
+    max-height: 115px;
+    padding: 10px 14px;
   }
 }
 
