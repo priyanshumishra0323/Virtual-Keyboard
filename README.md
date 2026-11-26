@@ -1,4 +1,4 @@
-# ⌨️ Virtual Mechanical Keyboard & Typing Practice
+# ⌨️ Virtual TypeFlow
 
 > An interactive, responsive mechanical keyboard simulator and typing practice web application built with pure HTML5, CSS3, and modern Vanilla JavaScript.
 
