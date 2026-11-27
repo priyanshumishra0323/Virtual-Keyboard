@@ -26,7 +26,7 @@
 
 ## 📌 About The Project
 
-**Virtual Mechanical Keyboard & Typing Practice** is a lightweight, zero-dependency browser application that blends the aesthetic and tactile feel of a physical mechanical keyboard with a real-time typing trainer.
+**Virtual TypeFlow** is a lightweight, zero-dependency browser application that blends the aesthetic and tactile feel of a physical mechanical keyboard with a real-time typing trainer.
 
 Whether you want to test physical keyboard keys, inspect key codes, practice typing speed with live WPM tracking, or simply interact with responsive 3D keycaps, this project delivers an engaging, distraction-free environment directly in the browser.
 
@@ -81,7 +81,7 @@ Whether you want to test physical keyboard keys, inspect key codes, practice typ
 
 ## 🌐 Demo / Live Preview
 
-- **Live URL**: [https://priyanshumishra0323.github.io/Virtual-Keyboard/](https://priyanshumishra0323.github.io/Virtual-Keyboard/) *(Replace with your deployed URL if hosted elsewhere)*
+- **Live URL**: [https://virtual-typeflow.vercel.app/](https://priyanshumishra0323.github.io/Virtual-Keyboard/) *(Replace with your deployed URL if hosted elsewhere)*
 
 > 💡 *Note: If you have hosted this project on GitHub Pages, Vercel, or Netlify, insert your live demo link above.*
 
@@ -115,9 +115,9 @@ Whether you want to test physical keyboard keys, inspect key codes, practice typ
 ## 📁 Project Structure
 
 ```text
-Virtual-Keyboard/
+Virtual-typeflow/
 │
-├── keyboard.html         # Main application markup (UI layout, stats header, keyboard structure)
+├── index.html         # Main application markup (UI layout, stats header, keyboard structure)
 ├── keyboard.css          # Styling (3D mechanical keycaps, themes, responsive queries)
 ├── keyboard.js           # Core logic (typing engine, WPM calculation, event listeners)
 └── README.md             # Project documentation and guide
@@ -132,21 +132,21 @@ This project requires **no external packages, Node.js, or complex build setups**
 ### Option 1: Direct File Open (Quickest)
 1. Clone or download this repository:
    ```bash
-   git clone https://github.com/priyanshumishra0323/Virtual-Keyboard.git
+   git clone https://github.com/priyanshumishra0323/Virtual-typeflow.git
    ```
 2. Navigate into the project folder:
    ```bash
-   cd Virtual-Keyboard
+   cd Virtual-typeflow
    ```
-3. Double-click `keyboard.html` or right-click and choose **Open with > Chrome / Firefox / Edge / Safari**.
+3. Double-click `index.html` or right-click and choose **Open with > Chrome / Firefox / Edge / Safari**.
 
 ---
 
 ### Option 2: Using VS Code Live Server (Recommended for Development)
 1. Open the project folder in **Visual Studio Code**.
 2. Install the **Live Server** extension by *Ritwick Dey* (if not already installed).
-3. Right-click `keyboard.html` and click **"Open with Live Server"**.
-4. The app will launch automatically at `http://127.0.0.1:5500/keyboard.html`.
+3. Right-click `index.html` and click **"Open with Live Server"**.
+4. The app will launch automatically at `http://127.0.0.1:5500/index.html`.
 
 ---
 
@@ -157,7 +157,7 @@ If you prefer running a local server via terminal:
 # Python 3
 python3 -m http.server 8000
 ```
-Then open `http://localhost:8000/keyboard.html` in your browser.
+Then open `http://localhost:8000/index.html` in your browser.
 
 ---
 
