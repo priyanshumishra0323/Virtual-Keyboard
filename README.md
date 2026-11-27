@@ -1,6 +1,6 @@
 # ⌨️ Virtual TypeFlow
 
-> An interactive, responsive mechanical keyboard simulator and typing practice web application built with pure HTML5, CSS3, and modern Vanilla JavaScript.
+> An interactive, responsive Virtual Typeflow simulator and typing practice web application built with pure HTML5, CSS3, and modern Vanilla JavaScript.
 
 ---
 
