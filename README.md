@@ -88,13 +88,13 @@ Whether you want to test physical keyboard keys, inspect key codes, practice typ
 ## 📸 Screenshots
 
 ### Keyboard & Application Preview
-<img width="1366" height="509" alt="Virtual Mechanical Keyboard Preview" src="https://github.com/user-attachments/assets/4ee869ad-c591-4e40-917b-cb66b5215505" />
+<img width="1366" height="509" alt="Virtual Mechanical Keyboard Preview" src="/asset/Screenshot From 2026-11-27 21-23-00.png" />
 
 
-<!--
+
 ### Practice Mode View
-![Practice Mode Screenshot](path/to/practice-mode-screenshot.png)
--->
+![Practice Mode Screenshot](/asset/Screenshot%20From%202026-11-27%2021-23-40.png)
+
 
 ---
 
