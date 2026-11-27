@@ -81,9 +81,7 @@ Whether you want to test physical keyboard keys, inspect key codes, practice typ
 
 ## 🌐 Demo / Live Preview
 
-- **Live URL**: [https://virtual-typeflow.vercel.app/](https://priyanshumishra0323.github.io/Virtual-Keyboard/) *(Replace with your deployed URL if hosted elsewhere)*
-
-> 💡 *Note: If you have hosted this project on GitHub Pages, Vercel, or Netlify, insert your live demo link above.*
+- **Live URL**: [https://virtual-typeflow.vercel.app/]
 
 ---
 
@@ -92,7 +90,7 @@ Whether you want to test physical keyboard keys, inspect key codes, practice typ
 ### Keyboard & Application Preview
 <img width="1366" height="509" alt="Virtual Mechanical Keyboard Preview" src="https://github.com/user-attachments/assets/4ee869ad-c591-4e40-917b-cb66b5215505" />
 
-> 📷 *Tip: You can add more screenshots (such as Practice Mode or Mobile View) in this section.*
+
 <!--
 ### Practice Mode View
 ![Practice Mode Screenshot](path/to/practice-mode-screenshot.png)
@@ -132,7 +130,7 @@ This project requires **no external packages, Node.js, or complex build setups**
 ### Option 1: Direct File Open (Quickest)
 1. Clone or download this repository:
    ```bash
-   git clone https://github.com/priyanshumishra0323/Virtual-typeflow.git
+   git clone https://github.com/priyanshumishra0323/Virtual-typeflow
    ```
 2. Navigate into the project folder:
    ```bash
@@ -182,7 +180,7 @@ Then open `http://localhost:8000/index.html` in your browser.
 
 ## ⌨️ Keyboard Layout
 
-The virtual keyboard features a comprehensive **78-key layout** distributed across 6 balanced rows:
+The virtual typeflow features a comprehensive **78-key layout** distributed across 6 balanced rows:
 
 | Row | Keys Included | Key Functions / Details |
 | :--- | :--- | :--- |
@@ -277,4 +275,3 @@ Contributions, issues, and feature requests are welcome!
 
 This project is open source and available under the [MIT License](LICENSE).
 
-*(If you haven't added a LICENSE file yet, feel free to add an `MIT License` file or replace this with your chosen license).*
